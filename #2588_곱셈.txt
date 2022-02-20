@@ -1,0 +1,9 @@
+a=int(input())
+b=int(input())
+sum=0
+for i in range(3):
+  X=b%10
+  sum+=a*X*10**i
+  print(a*X)
+  b//=10
+print(sum)
