@@ -1,4 +1,4 @@
-/*
+'''
 #1000
 a, b = map(int, input().split())
 print(a+b)
@@ -54,4 +54,4 @@ for i in range(a):
   x,y=map(int,input().split())
   print("Case #"+str(i+1)+": "+str(x)+" + "+str(y)+" = "+str(x+y))
 
-*/
+'''
