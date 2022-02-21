@@ -1,0 +1,8 @@
+#11721: 열 개씩 끊어 출력하기
+word=input()
+x=len(word)
+while x>10:
+  print(word[0:10])
+  word=word[10:]
+  x-=10
+print(word)

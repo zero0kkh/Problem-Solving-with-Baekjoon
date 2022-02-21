@@ -1,0 +1,7 @@
+#11720: 숫자의 합
+n=int(input())
+X=input()
+sum=0
+for i in range(n):
+  sum+=int(X[i])
+print(sum)

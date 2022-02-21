@@ -1,0 +1,10 @@
+#2741
+N=int(input())
+for i in range(N):
+  print(i+1)
+
+#2742: Inverse
+N=int(input())
+for i in range(N):
+  print(N)
+  N-=1

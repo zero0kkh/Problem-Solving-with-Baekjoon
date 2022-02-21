@@ -1,0 +1,9 @@
+'''
+#그대로 출력하기 Series
+
+#11718, 11719
+while True:
+  try: print(input())
+  except: break
+
+'''
