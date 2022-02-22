@@ -1,0 +1,12 @@
+#11726: 2*n Tile
+# Simple Recurrence
+n=int(input())
+DP=[0]*(n+1) # Memoization space for all possible cases(subproblems): 0~n
+#bottom-up
+DP[1]=1
+if n>1:
+  DP[2]=2
+if n>2:
+  for i in range(3,n+1):
+    DP[i]=DP[i-1]+DP[i-2]
+print(DP[n]%10007)

@@ -1,0 +1,14 @@
+#1463: 1로 만들기
+#DP 알고개 자료+인터넷 검색(상향식, 하향식)
+
+n=int(input())
+# Previous trials: bottom-up flow with subproblems was similar with DP but consider the memory more than time <=> It is just a bottom-up application of Divide*Conquer
+# REMIND: DP=>subproblem+make the memory for all possible cases and update the assigned value. (Memoization)
+DP=[0]*(n+1) # Memoization space for all possible cases(subproblems): 0~n
+
+for i in range(2,n+1):
+  temp=[DP[i-1]]
+  if i%3==0: temp.append(DP[i//3])
+  if i%2==0: temp.append(DP[i//2])
+  DP[i]=1+min(temp)
+print(DP[n])
