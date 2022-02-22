@@ -28,3 +28,11 @@ for i in range(n-1,0,-1):print(" "*(i-1)+"*"*(2*n-2*i+1))
 n=int(input())
 for i in range(1,n+1):print(" "*(n-i)+" ".join("*"*i))
 #10992
+n=int(input())
+for i in range(1,n+1):
+  if i==1:
+    print(" "*(n-i)+"*")
+  elif i==n:
+    print("*"*(2*n-1))
+    continue
+  else: print(" "*(n-i)+"*"+" "*(2*i-3)+"*")
