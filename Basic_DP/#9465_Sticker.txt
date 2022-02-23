@@ -1,0 +1,17 @@
+#9465 스티커
+# 2D DP (a little creative)
+N=int(input())
+for i in range(N):
+  n=int(input())
+  DP=[[0,0] for j in range(n)]
+  #2*n memoization matrix
+  #n-th [a,b]: 앞선 2*n에서 n번째 위쪽 스티커를 떼면서 최대가 되는 점수가 a, 아래쪽 스티커를 떼면서 최대가 되는 점수가 b
+  UP=list(map(int,input().split()))
+  DN=list(map(int,input().split()))
+  DP[0]=[UP[0],DN[0]]
+  if n>1: DP[1]=[DN[0]+UP[1],UP[0]+DN[1]]
+  if n>2:
+    for j in range(2,n):
+      DP[j][0]=UP[j]+max(DP[j-1][1],DP[j-2][1])
+      DP[j][1]=DN[j]+max(DP[j-1][0],DP[j-2][0])
+  print(max(DP[n-1][0],DP[n-1][1]))

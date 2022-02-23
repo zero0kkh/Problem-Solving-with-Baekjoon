@@ -1,0 +1,12 @@
+#11057 오르막 수
+# 2D DP
+n=int(input())
+DP=[[0 for i in range(10)] for j in range(n+1)]
+# Memoization space for all possible cases(subproblems): 0~n *_0~_9
+DP[1]=[1,1,1,1,1,1,1,1,1,1]
+if n>1:
+  for i in range(2,n+1):
+    for j in range(10):
+      for k in range(0,j+1):
+        DP[i][j]+=DP[i-1][k]
+print(sum(DP[n])%10007)

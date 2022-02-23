@@ -1,0 +1,11 @@
+#2193 이친수
+# 2D DP
+n=int(input())
+DP=[[0,0] for i in range(n+1)]
+# Memoization space for all possible cases(subproblems): n+1:0~n and 2:_0, _1
+DP[1]=[0,1]
+if n>1:
+  for i in range(2,n+1):
+    DP[i][0]=DP[i-1][0]+DP[i-1][1]
+    DP[i][1]=DP[i-1][0]
+print(sum(DP[n]))
