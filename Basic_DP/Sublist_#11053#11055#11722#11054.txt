@@ -1,0 +1,145 @@
+#11053, 11055에서 2차원 n*n 배열을 썼는데 사실 n짜리 1차원 배열을 n회 iteration 동안 최신화시켜서 마지막 상태만 필요한 것이므로 이 모든 과정을 기록하는 건 waste of memory임. (사실 업데이트가 필요없는 부분은 복사만 했으므로, 참조식이기 때문에 시간, 공간에서 큰 차이는 없음) 11722 참조
+
+#11053 가장 긴 증가하는 부분 수열
+#n*n 2D DP
+n=int(input())
+L=list(map(int,input().split()))
+D=[[0 for i in range(n)] for j in range(n)]
+# D[i][j]: i-th iteration, the length of the longest increasing sublist which one's end is the j-th number
+# Actually we need triangular matrix
+D[0][0]=1
+if n>1:
+  for i in range(1,n):
+    cands=[1]
+    for j in range(i):
+      D[i][j]=D[i-1][j]
+      if L[i]>L[j]: cands.append(D[i][j]+1)
+    D[i][i]=max(cands)
+print(max(D[n-1]))
+
+#11055 가장 큰 증가하는 부분 수열
+#n*n 2D DP
+n=int(input())
+L=list(map(int,input().split()))
+D=[[0 for i in range(n)] for j in range(n)]
+# D[i][j]: i-th iteration, the sum of the longest increasing sublist which one's end is the j-th number
+# Actually we need triangular matrix
+D[0][0]=L[0]
+if n>1:
+  for i in range(1,n):
+    cands=[L[i]]
+    for j in range(i):
+      D[i][j]=D[i-1][j]
+      if L[i]>L[j]: cands.append(D[i][j]+L[i])
+    D[i][i]=max(cands)
+print(max(D[n-1]))
+
+#11722 가장 긴 감소하는 부분 수열
+#n*n 2D DP
+#EFFICIENT METHOD WITH 1D MATRIX
+n=int(input())
+L=list(map(int,input().split()))
+D=[1 for i in range(n)]
+if n>1:
+  for i in range(n-1,0,-1):
+    cands=[1]
+    for j in range(i,n):
+      if L[i-1]>L[j]:
+        cands.append(D[j]+1)
+    D[i-1]=max(cands)
+print(max(D))
+
+'''
+#PREVIOUS
+n=int(input())
+L=list(map(int,input().split()))
+D=[[0 for i in range(n)] for j in range(n)]
+# D[i][j]: i-th iteration, the length of the longest decreasing sublist which one's end is the j-th number
+# Actually we need triangular matrix
+D[0][0]=1
+if n>1:
+  for i in range(1,n):
+    cands=[1]
+    for j in range(i):
+      D[i][j]=D[i-1][j]
+      if L[i]<L[j]: cands.append(D[i][j]+1)
+    D[i][i]=max(cands)
+print(max(D[n-1]))
+'''
+
+#11054 가장 긴 바이토닉 부분 수열
+#multiple 1*n matrix
+n=int(input())
+L=list(map(int,input().split()))
+d=[]
+# Partition=>increasing || decreasing=> Repeated calculation generated!!!
+# Keep in mind that we can recall the value of the previous subproblems with the enough memory to store them (Memoization)
+
+# Memoization: just run both the 'increasing' algorithm (bottom-up *following end point) and the 'decreasing' algorithm (top-down *following start point)
+
+if n<3: print(n)
+else:
+  D1=[1 for i in range(n)]
+  if n>1:
+    for i in range(1,n):
+      cands=[1]
+      for j in range(i):
+        if L[i]>L[j]: cands.append(D1[j]+1)
+      D1[i]=max(cands)
+
+  D2=[1 for j in range(n)]
+  if n>1:
+    for i in range(n-1,0,-1):
+      cands=[1]
+      for j in range(i,n):
+        if L[i-1]>L[j]:
+          cands.append(D2[j]+1)
+      D2[i-1]=max(cands)
+  D=[]
+  for i in range(n):
+    D.append(D1[i]+D2[i]-1)
+  print(max(D))
+
+'''
+#Partition: do not apply memoization to the algorithm therefore it cause time over.
+#11054 가장 긴 바이토닉 부분 수열
+#n*n 2D DP
+n=int(input())
+Ltot=list(map(int,input().split()))
+d=[]
+# Partition=>increasing || decreasing
+
+if n<3: print(n)
+else:
+  for i in range(n):
+    len=0
+    #increasing with L[0]~L[i-1]
+    if i==0: pass
+    else:
+      L=Ltot[:i] #i개
+      D=[[0 for j in range(i)] for k in range(i)]
+      # D[i][j]: i-th iteration, the length of the longest increasing sublist which one's end is the j-th number
+      D[0][0]=1
+      for j in range(1,i):
+        cands=[1]
+        for k in range(j):
+          D[j][k]=D[j-1][k]
+          if L[j]>L[k]: cands.append(D[j][k]+1)
+        D[j][k]=max(cands)
+      len+=max(D[i-1])
+    #decreasing with L[i]~L[n-1]
+    L=Ltot[i:] #n-i개
+    D=[[0 for j in range(n-i)] for k in range(n-i)]
+    # D[i][j]: i-th iteration, the length of the longest decreasing sublist which one's end is the j-th number
+    D[0][0]=1
+    for j in range(1,n-i):
+      cands=[1]
+      for k in range(j):
+        D[j][k]=D[j-1][k]
+        if L[j]<L[k]: cands.append(D[j][k]+1)
+      D[j][k]=max(cands)
+    len+=max(D[n-i-1])
+    d.append(len)
+print(max(d))  
+'''
+
