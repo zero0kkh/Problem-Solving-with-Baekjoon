@@ -1,0 +1,16 @@
+#2579 계단오르기
+n=int(input())
+L=[]
+for i in range(n):
+  L.append(int(input()))
+D=[[0,0] for i in range(n)]
+#D[i][0]: 마지막에 한 계단을 올라서 L[i]를 밟을 때의 최대 점수, D[i][1]: 마지막에 두 계단
+D[0][0]=L[0]
+if n>1:
+  D[1][0]=L[0]+L[1]
+  D[1][1]=L[1]
+  if n>2:
+    for i in range(2,n):
+      D[i][0]=L[i]+D[i-1][1]
+      D[i][1]=L[i]+max(D[i-2])
+print(max(D[n-1]))

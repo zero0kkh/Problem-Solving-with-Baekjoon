@@ -1,0 +1,12 @@
+#1699 제곱수의 합
+import math
+n=int(input())
+D=[100000 for i in range(n+1)]
+D[0]=0
+for i in range(1,n+1):
+  k=math.floor(math.sqrt(i)) 
+  min=100000
+  for j in range(1,k+1):
+    if min>D[i-j**2]: min=D[i-j**2]
+  D[i]=min+1
+print(D[n])
