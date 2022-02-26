@@ -1,0 +1,14 @@
+#9461 파도반 수열
+N=int(input())
+for i in range(N):
+  n=int(input())
+  D=[0 for j in range(100)]
+  D[0]=1
+  D[1]=1
+  D[2]=1
+  D[3]=2
+  D[4]=2
+  if n>5:
+    for k in range(5,n):
+      D[k]=D[k-1]+D[k-5]
+  print(D[n-1])

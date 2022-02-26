@@ -1,0 +1,4 @@
+#2225 합분해 kHn
+from math import factorial
+N,K=map(int,input().split())
+print(factorial(N+K-1)//factorial(N)//factorial(K-1)%1000000000)
