@@ -16,16 +16,18 @@ I=input()
 n=int(I)
 N=len(I)
 D=[0 for i in range(N)]
-if N<3:
+if int(I[0])==0:
+  print(0) #except 01, 001, ~~
+elif N<3:
   print(under_100(n))
 else:
-  D[0]=under_100(n%10)
-  D[1]=under_100(n%100)
+  D[0]=under_100(int(I[0]))
+  D[1]=under_100(int(I[0:2]))
   for i in range(2,N):
     x=int(I[i-1:i+1]) #끝 두자리
     if x%10!=0:
       D[i]+=D[i-1]
-    if I[i-1]!=0 and (x==20 or under_100(x)==2):
+    if I[i-1]!=0 and (x==20 or x==10 or under_100(x)==2):
       D[i]+=D[i-2]
   print(D[N-1]%1000000)
 
