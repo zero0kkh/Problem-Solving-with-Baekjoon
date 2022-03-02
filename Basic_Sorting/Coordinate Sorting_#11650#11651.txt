@@ -1,0 +1,29 @@
+#11650 좌표 정렬하기
+#https://docs.python.org/3/library/functools.html#functools.cmp_to_key
+from functools import cmp_to_key as cmp
+#https://rank-brothers.com/1046/python-sort-with-comparator/
+
+def comparer(p1,p2):
+  if p1[0]==p2[0]:
+    return p1[1]-p2[1]
+  else: return p1[0]-p2[0]
+  
+N=int(input())
+L=[list(map(int,input().split())) for i in range(N)]
+L2=sorted(L,key=cmp(comparer))
+for i in L2:
+  print(" ".join(map(str,i)))
+
+#11651 좌표 정렬하기 2
+from functools import cmp_to_key as cmp
+
+def comparer(p1,p2):
+  if p1[1]==p2[1]:
+    return p1[0]-p2[0]
+  else: return p1[1]-p2[1]
+  
+N=int(input())
+L=[list(map(int,input().split())) for i in range(N)]
+L2=sorted(L,key=cmp(comparer))
+for i in L2:
+  print(" ".join(map(str,i)))

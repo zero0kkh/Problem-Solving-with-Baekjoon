@@ -1,1 +1,9 @@
 #2751 수 정렬하기 2
+#if need more speend although pypy, use speedy I/O:  input = sys.stdin.readline
+#https://www.acmicpc.net/problem/15552
+#https://www.acmicpc.net/board/view/22716
+N=int(input())
+L=[int(input()) for i in range(N)]
+L.sort()
+for i in L:
+  print(i)
