@@ -1,0 +1,7 @@
+#10825 국영수
+#https://dailyheumsi.tistory.com/67
+N=int(input())
+L=[input().split() for i in range(N)]
+L2=sorted(L,key=lambda x: (-int(x[1]), int(x[2]), -int(x[3]), x[0]))
+for i in L2:
+  print(i[0])
