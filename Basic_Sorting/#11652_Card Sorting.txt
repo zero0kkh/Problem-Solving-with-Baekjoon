@@ -1,0 +1,16 @@
+#11652 카드
+import sys
+import math
+N=int(sys.stdin.readline())
+L={}
+max=[-math.inf,0]
+for i in range(N):
+  n=int(sys.stdin.readline())
+  if n in L: L[n]+=1
+  else: L[n]=1
+  if max[1]<L[n]:
+    max=[n,L[n]]
+  elif max[1]==L[n] and max[0]>n:
+    max[0]=n
+
+sys.stdout.write(str(max[0]))

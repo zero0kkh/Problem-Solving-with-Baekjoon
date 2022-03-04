@@ -1,0 +1,7 @@
+#11004 k번째 수
+import sys
+import math
+N,K=map(int,sys.stdin.readline().split())
+L=list(map(int,sys.stdin.readline().split()))
+L.sort()
+sys.stdout.write(str(L[K-1]))
