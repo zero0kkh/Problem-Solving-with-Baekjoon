@@ -1,0 +1,19 @@
+#9012 괄호
+#stack 문제인데 그냥 stack 안 쓰고 품.
+import sys
+N=int(sys.stdin.readline())
+
+for i in range(N):
+  pstr=sys.stdin.readline()
+  open=0
+  close=0
+  for i in range(len(pstr)):
+    para=pstr[i]
+    if para=='(': open+=1
+    elif para==')': close+=1
+    #else: close+=1
+    
+    if open<close:
+      break
+  if open==close: print("YES")
+  else: print("NO")
