@@ -1,0 +1,16 @@
+#10809 알파벳 찾기
+
+#Setting for the speed-up
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+word=input()
+answ=[-1]*26
+for i in range(len(word)):
+  if answ[ord(word[i])-97]==-1: answ[ord(word[i])-97]=i
+print(" ".join(map(str,answ)))

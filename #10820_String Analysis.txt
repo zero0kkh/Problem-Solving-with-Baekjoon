@@ -1,0 +1,13 @@
+#10820 문자열 분석
+
+while True:
+  try:
+    line=input()
+    answ=[0,0,0,0]
+    for c in line:
+      if 96<ord(c)<123: answ[0]+=1
+      elif 64<ord(c)<91: answ[1]+=1
+      elif 47<ord(c)<58: answ[2]+=1
+      elif ord(c)==32: answ[3]+=1 #공백
+    print(" ".join(map(str,answ)))
+  except: break

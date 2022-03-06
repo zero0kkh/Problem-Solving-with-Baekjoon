@@ -1,0 +1,15 @@
+#10808 알파벳 개수
+
+#Setting for the speed-up
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+word=input()
+answ=[0]*26
+for c in word: answ[ord(c)-97]+=1
+print(" ".join(map(str,answ)))

@@ -1,0 +1,11 @@
+#11655 ROT13
+def ROT13(c):
+  asc=ord(c)
+  if 96<asc<123:
+    if asc-13<97: return chr(123+asc-110)
+    else: return chr(asc-13)
+  if 64<asc<91:
+    if asc-13<65: return chr(91+asc-78)
+    else: return chr(asc-13)
+  else: return c
+print("".join(map(ROT13,input())))
