@@ -1,0 +1,17 @@
+#11656 접미사
+#Setting for the speed-up
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+string=input()
+stl=[]
+for i in range(len(string)):
+  stl.append(string[i:])
+stl.sort()
+for s in stl:
+  print(s)
