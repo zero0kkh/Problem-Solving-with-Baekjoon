@@ -1,0 +1,32 @@
+#1406 에디터
+#linked list문제지만 stack 2개로 해결
+
+#Setting for the speed-up
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+pre=list(input())
+post=[] #역순으로 저장됨.
+l=len(pre) #_c0_c1---_cn-1_
+n=int(input())
+for j in range(n):
+  cmd=input().split()
+  if cmd[0]=='L' and pre:
+    post.append(pre.pop())
+  elif cmd[0]=='D' and post:
+    pre.append(post.pop())
+  elif cmd[0]=='B' and pre:
+    pre.pop()
+  elif cmd[0]=='P':
+    pre.append(cmd[1])
+for j in range(len(post)):
+  pre.append(post[len(post)-j-1])
+print("".join(pre))
+
+#Instead of Line 25~27
+#print("".join(pre)+"".join(post[::-1]))
