@@ -1,0 +1,40 @@
+#1158 요세푸스 문제
+
+#Setting for the speed-up
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+#deque
+from collections import deque as deq
+#양쪽이 열려있는 deque에서는 pop은 O(1) operation이지만 python list에서의 pop(0)는 [0]부터 시작해야하는 닫힌 상태에서의 pop이기 때문에 모든 원소가 shift->O(n)
+n,k=map(int,input().split())
+nums=deq(range(1,n+1))
+key=[]
+for i in range(n):
+  for j in range(k-1):
+    nums.append(nums.popleft())
+  key.append(nums.popleft())
+print("<"+", ".join(list(map(str,key)))+">")
+
+#단순 구현: 시간 초과
+'''
+n,k=map(int,input().split())
+key=[]
+curr=0
+while len(key)!=n:
+  cnt=0
+  while cnt<k:
+    curr+=1
+    curr%=n
+    if curr==0: curr=n
+    if not curr in key:
+      cnt+=1
+  if curr==0: curr=n
+  key.append(curr)
+print("<"+", ".join(list(map(str,key)))+">")
+'''
