@@ -1,0 +1,22 @@
+#2745 진법 변환
+#Fast I/O
+import sys
+def print(string=""):
+  sys.stdout.write(string)
+def print(inte=0):
+  sys.stdout.write(str(inte))
+def input():
+  return sys.stdin.readline().rstrip()
+
+n, k = input().split()
+print(int(n, int(k)))
+
+'''
+#basic implementation
+n,b=input().split()
+key=0
+for i in range(len(n)):
+  if n[len(n)-i-1].isdigit(): key+=int(b)**i*int(n[len(n)-i-1])
+  else: key+=int(b)**i*(ord(n[len(n)-i-1])-55)
+print(key)
+'''

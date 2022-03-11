@@ -1,0 +1,31 @@
+#11005 진법 변환 2
+#Fast I/O
+import sys
+def print(string=""):
+  sys.stdout.write(string)
+def print(inte=0):
+  sys.stdout.write(str(inte))
+def input():
+  return sys.stdin.readline().rstrip()
+
+n,b=map(int,input().split())
+def Notation(n,b):
+  q=n%b
+  if n<b:
+    if q>9: return(chr(q+55))
+    else: return(str(q))
+  else:
+      if q>9: return Notation(n//b,b)+chr(q+55)
+      else: return Notation(n//b,b)+str(q)
+print(Notation(n,b))
+
+'''
+n, b = map(int, input().split(' '))
+t = []
+while n:
+    t.append(n % b)
+    n //= b
+t.reverse()
+l = ''.join([chr(i - 10 + ord('A')) if i >= 10 else str(i) for i in t])
+print(l)
+'''

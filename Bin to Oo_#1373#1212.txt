@@ -1,0 +1,17 @@
+#1373 2진수 8진수
+#Fast I/O
+import sys
+def print(string=""):
+  sys.stdout.write(string)
+def print(inte=0):
+  sys.stdout.write(str(inte))
+def input():
+  return sys.stdin.readline().rstrip()
+
+#https://www.daleseo.com/python-int-bases/
+
+print(format(int(input(),2),'o'))
+#print('%o'%int(input(),2))
+
+#1212 8진수 2진수
+print(format(int(input(),8),'b'))
