@@ -1,0 +1,40 @@
+#2609 최대공약수와 최소공배수
+#Fast I/O
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+#유클리드 호제법
+def GCD(a,b):
+  r=b%a
+  if r==0: return a
+  return GCD(r,a)
+
+a,b=map(int,input().split())
+if a>b:
+  tmp=b
+  b=a
+  a=tmp
+gcd=GCD(a,b)
+print(gcd)
+print(a*b//gcd)
+
+'''
+#simple calculation
+GCD=1
+LCM=a*b
+for i in range(a,1,-1):
+  if a%i==0 and b%i==0:
+    GCD=i
+    break
+for i in range(1,b-2):
+  if (a*i)%b==0:
+    LCM=a*i
+    break
+print(GCD)
+print(LCM)
+'''

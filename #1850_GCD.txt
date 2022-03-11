@@ -1,0 +1,26 @@
+#1850 최대공약수
+#Fast I/O
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte))
+def input():
+  return sys.stdin.readline().rstrip()
+
+#유클리드 호제법
+def GCD(a,b):
+  r=b%a
+  if r==0: return a
+  return GCD(r,a)
+
+a,b=map(int,input().split())
+
+if a>b:
+  tmp=b
+  b=a
+  a=tmp
+
+key=0
+for i in range(GCD(a,b)):
+  print(1)
