@@ -1,0 +1,117 @@
+#1169 요세푸스 문제 2
+#Segment tree
+#Reference: https://www.acmicpc.net/board/view/79834
+#IDEA: 이전 위치에서 k뒤가 아닌 매번 가장 앞에서부터 몇 번째(order번쨰)인지 카운팅하되 저번 차례에 빠진 사람을 고려해서 order에 k-1씩 더해주고 현재 남아있는 사람 수로 mod 계산
+#그 후 매번 앞에서부터 몇 번째인지는 남아있으면 1을 값으로 가지는 세그먼트 트리에서 처음부터의 합이 원하는 order가 되는 index를 찾는 것을 segment tree를 이용하여 log(N) 안에 계산.
+#전체적인 시간복잡도: O(NlogN)<이전의 요세푸스 시간복잡도 O(NK)
+import sys
+input = sys.stdin.readline
+
+def init(node, start, end):
+  if start == end:
+    tree[node] = 1
+  else:  
+      mid = (start+end)//2
+      tree[node]=init(2*node, start, mid)+init(2*node+1, mid+1, end)
+  return tree[node]
+
+#query: 앞에서부터 order번째 수를 찾음과 동시에 그 과정에서의 그 수의 parent들을 모두 update(-1)시킴
+def query(node, start, end, order):
+  print(tree)  
+  tree[node] -= 1
+  if start == end:
+    return start
+  mid = (start+end)//2
+  if tree[2*node] >= order:
+    return query(2*node, start, mid, order)
+  
+  return query(2*node+1, mid+1, end, order - tree[2*node])
+
+
+n, k = map(int, input().split())
+tree = [0]*4*n
+order = k
+init(1,1,n)
+print("<", end = "")
+for _ in range(1, n):
+  #REMIND: the value of 'order' (global variable) doesn't change during the recursion.
+  print(query(1,1,n, order), end = ", ")
+  order += k-1 #매차례 1명씩 하나의 leaf를 0으로 만들고 있으므로 앞에서부터 셀 때 k-1를 추가하면 됨.
+  order = (order-1)%tree[1]+1 #현재 남아있는 인원수 tree[1]로 나눠주되 나눠 떨어질 때 나머지를 0이 아닌 n으로 만드는 수식.
+
+print(query(1,1,n,order), end = ">")
+
+'''
+#아래는 segment tree에 대한 이해가 얕은 상태에서 단순히 O(logN)만에 구간합 구하는 방식을 쓰되 그것을 함수를 위의 query처럼 변형하지 않고 안에서 O(k)만큼 for문 반복하여 전체적으로 O(NKlog(N))으로 오히려 이전 요세푸스에서의 O(NK)보다 느려짐.
+
+#Setting for the speed-up
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+#segment tree
+#값을 바꾸고 구간의 합을 구하는 데 효율적 O(logN)
+#값을 1 or 0으로 하여 구간의 합이 K인 것들을 찾아 값을 바꿔주는 방식으로 진행.
+#https://velog.io/@kimdukbae/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0-%EC%84%B8%EA%B7%B8%EB%A8%BC%ED%8A%B8-%ED%8A%B8%EB%A6%AC-Segment-Tree
+#https://cocook.tistory.com/156
+
+n,k=map(int,input().split())
+arr=[1]*n
+tree=[0]*(len(arr)*4)
+#INDEX in tree: parent->smaller: *2 ->larger:*2+1
+#start, end, left, rightL position in arr
+def init(start,end,index):
+  if start==end:
+    tree[index] =arr[start]
+    return tree[index]
+  mid = (start+end)//2
+  tree[index]=init(start,mid,index*2)+init(mid+1,end, index*2+1)
+  return tree[index]
+
+#left부터 right 사이에 있는 값들의 합을 구해준다.
+def interval_sum(start,end,index,left,right):
+  if left > end or right < start: return 0
+  elif left <= start and right >= end: return tree[index]
+  else:
+    mid = (start + end) // 2
+    return interval_sum(start, mid, index * 2, left, right) + interval_sum(mid + 1, end, index * 2 + 1, left, right)
+
+#update in here: make the value:1->0
+def update(start,end,index,what):
+  if what<start or what>end: return
+  tree[index]-=1
+  if start==end: return
+  mid=(start+end)//2
+  update(start,mid,index*2,what)
+  update(mid+1,end,index*2+1,what)
+
+init(0,n-1,1) #arr의 0부터 n-1번째 값까지를 가지고 tree의 1번부터 그 합을 채워간다. 요세푸스의 i번째 사람은 arr의 i-1번째와 같다. 남아있다면 값이 1.
+key=[]
+prev=k-1 #start at k-1 (it means k-th person in Josephus)
+for i in range(n):
+  update(0,n-1,1,prev)
+  key.append(prev+1)
+  if i==n-1: break
+  #다음 요세푸스 수 찾아서 prev(해당수-1)에 저장
+  #k명이상 남아있을 때까지는 환형으로 다음 순서 데려와서 구간합 구하는 방식
+  if tree[1]>=k: k1=k
+  elif tree[1]==1: k1=1 #마지막에 하나 남았을 때 예외처리, arr[prev]도 0이 되고 k1도 0이기 때문에 마지막에서 두 번째가 중복되서 나옴. 이때 유일하게 남아있는 1을 찾기 위해 k1을 1로 설정
+  else: k1=k%tree[1]
+    #sum without circulation: prev~n-1 : used to determine we need circulation to find the next number
+  SwoC=interval_sum(0,n-1,1,prev+1,n-1)
+  if SwoC>=k1:
+    for j in range(prev+k1,n):
+      if interval_sum(0,n-1,1,prev+1,j)==k1:
+        prev=j
+        break
+  else:
+    for j in range(k1-SwoC-1,prev):
+      if interval_sum(0,n-1,1,0,j)==k1-SwoC:
+        prev=j
+        break
+print("<"+", ".join(list(map(str,key)))+">")
+'''
