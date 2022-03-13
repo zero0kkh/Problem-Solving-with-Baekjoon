@@ -1,0 +1,25 @@
+#11576 Base Conversion
+#Fast I/O
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+#refer https://velog.io/@code_angler/%ED%8C%8C%EC%9D%B4%EC%8D%AC-%EC%A7%84%EC%88%98%EB%B3%80%ED%99%982%EC%A7%84%EB%B2%95-3%EC%A7%84%EB%B2%95-5%EC%A7%84%EB%B2%95-10%EC%A7%84%EB%B2%95n%EC%A7%84%EB%B2%95
+def baseConversion(n,q):
+  s=""
+  while n>0:
+    n,mod=divmod(n,q)
+    s=str(mod)+" "+s
+  return s
+
+a,b=map(int,input().split())
+n=int(input())
+numA=list(map(int,input().split()))
+num10=0
+for i in range(n):
+  num10+=numA[n-i-1]*(a**i)
+print(baseConversion(num10,b))
