@@ -1,0 +1,23 @@
+#11653 소인수분해
+#Factorization
+#Fast I/O
+import sys, math
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+N=int(input())
+def factorization(x):
+  d=2
+  l=[]
+  while d<=x:
+    if x%d==0:
+      x=x//d
+      l.append(d) 
+    else: d=d+1
+  return l
+for e in factorization(N):
+  print(e)
