@@ -1,0 +1,13 @@
+#1978 소수 찾기
+N=int(input())
+nums=list(map(int,input().split()))
+cnt=0
+for n in nums:
+    if n==1: continue
+    chk=1
+    for i in range(2,n):
+        if n%i==0: 
+            chk=0
+            break
+    if chk:cnt+=1
+print(cnt)
