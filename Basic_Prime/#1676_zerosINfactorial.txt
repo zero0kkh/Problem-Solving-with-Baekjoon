@@ -1,0 +1,21 @@
+#1676 팩토리얼 0의 개수
+#0 in Factorial
+#Fast I/O
+import sys, math
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+N=int(input())
+n=0
+i=1
+if N==0: print(0)
+else:
+  while i<=math.log(N,5):
+    n+=N//(5**i)
+    i+=1
+  print(n) 
+  
