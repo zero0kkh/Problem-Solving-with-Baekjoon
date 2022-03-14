@@ -1,0 +1,27 @@
+#6588 골드바흐의 추측
+#Goldbach's conjecture
+#Fast I/O
+import sys, math
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+#Time limit of 1s for "ALL" test cases
+x=1000000
+primes=[True]*(x) #primes[0]무시, 어차피 두 소수의 합이니까 1~x-1에 대해서만 소수 탐색
+for  i in range(2,int(math.sqrt(x))+1):
+  if primes[i]:
+    for j in range(i+i,x,i):
+      primes[j]=False
+     
+while True:
+  n=int(input())
+  if n==0: break
+  for p in range(2,n):
+    if primes[p] and primes[n-p]:
+      print(str(n)+" = "+str(p)+" + "+str(n-p))
+      break
+    if p==n-1: print("Goldbach's conjecture is wrong.")
