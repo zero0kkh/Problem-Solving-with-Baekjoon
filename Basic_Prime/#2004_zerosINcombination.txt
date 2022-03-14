@@ -1,0 +1,25 @@
+#2004 조합 0의 개수
+#0 in Combination
+#Fast I/O
+import sys, math
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+N,M=map(int,input().split())
+n=0
+m=0
+i=1
+j=1
+if M==0: print(0)
+else:
+  while i<=math.log(N,5):
+    n+=N//(5**i)-M//(5**i)-(N-M)//(5**i)
+    i+=1
+  while j<=math.log(N,2):
+    m+=N//(2**j)-M//(2**j)-(N-M)//(2**j)
+    j+=1
+  print(min(n,m))
