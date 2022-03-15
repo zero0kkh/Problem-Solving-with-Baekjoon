@@ -1,0 +1,47 @@
+#1260 DFS와 BFS
+#refer: https://itholic.github.io/python-bfs-dfs/ 
+#Refer Comment of above post
+#Fast I/O
+
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string)
+def print(inte=0):
+  sys.stdout.write(str(inte))
+def input():
+  return sys.stdin.readline().rstrip()
+
+n,m,s=map(int,input().split())
+V=[i for i in range(1,n+1)]
+E=[[] for _ in range(n+1)]
+for _ in range(m):
+  v1,v2=map(int,input().split())
+  E[v1].append(v2)
+  E[v2].append(v1)
+for _ in range(1,n+1):
+  E[_].sort(reverse=True) #to use pop() method
+
+#DFS
+visit=[]
+stack=[s]
+while stack:
+  node=stack.pop()
+  if node not in visit:
+    visit.append(node)
+    stack.extend(E[node])
+print(" ".join(map(str,visit))+"\n")
+
+#BFS
+for _ in range(1,n+1):
+  E[_].reverse()
+visit=[]
+queue=deque()
+queue.append(s)
+while queue:
+  node=queue.popleft()
+  if node not in visit:
+    visit.append(node)
+    for nxt in E[node]:
+      queue.append(nxt)
+print(" ".join(map(str,visit)))
