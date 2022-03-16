@@ -1,0 +1,38 @@
+#11724 연결 요소의 개수
+#Fast I/O
+
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string)
+def print(inte=0):
+  sys.stdout.write(str(inte))
+def input():
+  return sys.stdin.readline().rstrip()
+
+n,m=map(int,input().split())
+V=[i for i in range(1,n+1)]
+E=[[] for _ in range(n+1)]
+for _ in range(m):
+  v1,v2=map(int,input().split())
+  E[v1].append(v2)
+  E[v2].append(v1)
+for _ in range(1,n+1):
+  E[_].sort(reverse=True) #to use pop() method
+
+
+#DFS
+def CC(V,E):
+  visit=[]
+  stack=[]
+  stack.append(V[0])
+  while stack:
+    node=stack.pop()
+    if node not in visit:
+      visit.append(node)
+      stack.extend(E[node])
+  if len(visit)==len(V): return 1
+  for x in visit:
+    V.remove(x)
+  return 1+CC(V,E)
+print(CC(V,E))
