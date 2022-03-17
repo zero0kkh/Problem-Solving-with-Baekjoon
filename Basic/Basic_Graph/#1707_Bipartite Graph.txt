@@ -1,0 +1,114 @@
+#1707 이분 그래프
+#Refer Comment of above post
+#Fast I/O
+
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+n=int(input())
+for _ in range(n):
+  v,e=map(int,input().split())
+  V=[i for i in range(1,v+1)]
+  E=[[] for __ in range(v+1)]
+  for __ in range(e):
+    v1,v2=map(int,input().split())
+    E[v1].append(v2)
+    E[v2].append(v1)
+  for _ in range(1,v+1):
+    E[_].sort() #to use pop() method
+  #BFS
+  visit=[0 for i in range(v)] #not visited:0/if red:1 / if blue:2/
+  queue=deque()
+  chk=1
+  visit[0]=1
+  queue.append(1)
+  while queue:
+    #print(queue)
+    #print(visit)
+    node=queue.popleft()
+    now=visit[node-1]
+    for nxt in E[node]:
+      next=visit[nxt-1]
+      if next==0:
+        if now==1: visit[nxt-1]=2
+        else:
+          visit[nxt-1]=1
+        queue.append(nxt)
+      else:
+        if now==next:
+          chk=0
+          break
+    #for unconnected graphs
+    if (not queue) and (0 in visit):
+      new=visit.index(0)
+      visit[new]=1
+      queue.append(new+1)
+  if chk: print("YES")
+  else: print("NO")
+
+
+'''
+#같은 bfs이지만 visit을 리스트 보관용으로 써서 시간초과
+#1707 이분 그래프
+#Refer Comment of above post
+#Fast I/O
+
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+n=int(input())
+for _ in range(n):
+  v,e=map(int,input().split())
+  V=[i for i in range(1,v+1)]
+  E=[[] for __ in range(v+1)]
+  for __ in range(e):
+    v1,v2=map(int,input().split())
+    E[v1].append(v2)
+    E[v2].append(v1)
+  for _ in range(1,v+1):
+    E[_].sort() #to use pop() method
+  #BFS
+  visit=[]
+  visit1=[]
+  queue=deque()
+  chk=1
+  queue.append((1,0))
+  while queue:
+    node,stat=queue.popleft()
+    if stat==0:
+      if node in visit1:
+        chk=0
+        break
+      if node not in visit:
+        visit.append(node)
+        for nxt in E[node]:
+          queue.append((nxt,1))
+    if stat==1:
+      if node in visit:
+        chk=0
+        break
+      if node not in visit1:
+        visit1.append(node)
+        for nxt in E[node]:
+          queue.append((nxt,0))
+    if (not queue) and len(visit)+len(visit1)<v:
+      for i in range(1,v+1):
+        if (not i in visit) and (not i in visit1):
+            queue.append((i,0))
+            break
+      
+  if chk: print("YES")
+  else: print("NO")
+'''
