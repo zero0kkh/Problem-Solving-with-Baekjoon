@@ -36,3 +36,5 @@ def CC(V,E):
     V.remove(x)
   return 1+CC(V,E)
 print(CC(V,E))
+
+#Also can be solved with Union&Find
