@@ -1,0 +1,32 @@
+#10451 순열 사이클
+#Fast I/O
+
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+#try union-find (smaller one becomes parent) with Path Compression
+   
+N=int(input())
+for _ in range(N):
+  n=int(input())
+  E=list(map(int,input().split())) #E[i]=j<=>edge:i+1->j
+  cnt=1
+  #DFS
+  visit=[0]*n
+  stack=[]
+  stack.append(1)
+  while stack:
+    node=stack.pop()
+    if visit[node-1]==0:
+      visit[node-1]=1
+      stack.append(E[node-1])
+    elif 0 in visit:#this DFS tree include cycle
+      cnt+=1
+      stack.append(visit.index(0)+1)
+  print(cnt)
