@@ -1,0 +1,21 @@
+#2331 반복수열
+#Fast I/O
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+A,P=map(int,input().split())
+stack=[A]
+while True:
+  num=0
+  for _ in str(stack[-1]):
+    num+=int(_)**P
+  if not num in stack: stack.append(num)
+  else:
+    print(stack.index(num))
+    break
