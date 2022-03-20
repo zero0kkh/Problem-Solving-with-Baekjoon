@@ -1,0 +1,52 @@
+#9466 Team project
+#Cycle cf.10451 "permutation" cycle
+#Fast I/O
+#Learned
+#1. Do not use [? in visit] to check if there is left nodes. Instead, apply DFS in the for-statement
+#2. Python: sys.setrecursionlimit(111111)
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(111111)
+
+def DFS(node):
+  global cnt,cycle,start  
+  cnt+=1
+  if visit[node-1]==0:
+    visit[node-1]=cnt
+    if E[node-1]==node:
+      cycle+=1
+    else: DFS(E[node-1])
+  else:
+    if start<visit[node-1]: #cycle 형성시
+      cycle+=cnt-visit[node-1]
+    if cnt<=n:
+      cnt-=1
+      start=cnt
+
+N=int(input())
+
+for _ in range(N):
+  n=int(input())
+  E=list(map(int,input().split())) #E[i]=j<=>edge:i+1->j
+  cnt=0
+  cycle=0
+  start=0 #to classify dfs trees
+  visit=[0]*n #store the order of visit 몇번째로 방문했는지 cnt를 저장
+  '''
+  #사전처리
+  for i in range(2,n+1):
+    if E[i-1]==i: #자기 자신 선택하는 노드 사전처리하여 시간단축
+      cnt+=1
+      cycle+=1
+      visit[i-1]=cnt
+  '''
+  #DFS
+  for i in range(1,n+1):
+    if not visit[i-1]: DFS(i)
+  print(n-cycle)
