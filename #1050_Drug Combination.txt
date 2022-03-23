@@ -1,0 +1,50 @@
+#1050 물약
+#Fast I/O
+#Learned
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(111111)
+
+n,m=map(int,input().split())
+menu=dict()
+eqs=[]
+for _ in range(n):
+  item, price=input().split()
+  menu[item]=int(price)
+for _ in range(m):
+  equation=input().split('=')
+  component=equation[1].split('+')
+  right=[]
+  for e in component:
+    right.append([int(e[0]),e[1:]])
+  eqs.append([equation[0],right])
+prev=list(menu.values())
+
+while True:
+  for e in eqs:
+    chk=1
+    for i in range(len(e[1])):
+      if not e[1][i][1] in menu:
+        chk=0
+        break
+    if chk:
+      price=0
+      for i in range(len(e[1])):
+        price+=e[1][i][0]*menu[e[1][i][1]]
+      if price>1000000000: price=1000000001
+      if e[0] in menu:
+        if menu[e[0]]>price:
+          menu[e[0]]=price
+      else:
+        menu[e[0]]=price
+  if prev==list(menu.values()): break
+  else: prev=list(menu.values())
+
+if 'LOVE' in menu: print(menu['LOVE'])
+else: print(-1)

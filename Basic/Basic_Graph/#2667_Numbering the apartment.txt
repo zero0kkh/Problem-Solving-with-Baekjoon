@@ -1,0 +1,38 @@
+#2667 Numbering the apartment
+#DFS cf.#9466
+#Fast I/O
+#Learned
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(111111)
+
+def DFS(node):
+  global cnt, N
+  if visit[node]==0 and map[node]==1:
+    cnt+=1
+    visit[node]=cnt
+    if (node+1)%N!=0: DFS(node+1)
+    if (node+1)%N!=1: DFS(node-1)
+    if node<N**2-N: DFS(node+N)
+    if node>N-1: DFS(node-N)
+N=int(input())
+nums=[]
+I=""
+for _ in range(N):
+  I+=input()
+map=list(map(int,I))
+visit=[0]*len(map)
+for i in range(len(map)):
+  if map[i]==1 and visit[i]==0:
+    cnt=0 #counting of node for calculate number of nodes in the connected component
+    DFS(i)
+    nums.append(cnt)
+nums.sort()
+print(len(nums))
+for num in nums: print(num)
