@@ -1,0 +1,48 @@
+#7576 토마토
+#cf. 4963 섬의 개수
+#BFS
+#Fast I/O
+#Learned
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(111111)
+
+w,h=map(int,input().split())
+MAP=[]
+visit=deque()
+for _ in range(h):
+  row=input().split()
+  MAP.append(row)
+#BFS
+level=-1
+for i in range(h):
+  for j in range(w):
+    if MAP[i][j]=='1': visit.append((i,j,0))
+
+while visit:
+  i,j,level=visit.popleft()
+  if i!=0 and MAP[i-1][j]=='0':
+    MAP[i-1][j]='1'
+    visit.append((i-1,j,level+1))
+  if j!=0 and MAP[i][j-1]=='0':
+    MAP[i][j-1]='1'
+    visit.append((i,j-1,level+1))
+  if i!=h-1 and MAP[i+1][j]=='0':
+    MAP[i+1][j]='1'
+    visit.append((i+1,j,level+1))
+  if j!=w-1 and MAP[i][j+1]=='0':
+    MAP[i][j+1]='1'
+    visit.append((i,j+1,level+1))
+
+chk=0
+for i in range(h):
+  for j in range(w):
+    if MAP[i][j]=='0': chk=1
+if chk: print(-1)
+else: print(level)
