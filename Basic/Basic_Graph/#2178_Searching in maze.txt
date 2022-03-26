@@ -1,0 +1,44 @@
+#2178 미로 탐색
+#cf. 7576 토마토
+#BFS
+#Fast I/O
+#Learned
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(111111)
+
+n,m=map(int,input().split())
+I=""
+visit=deque()
+for _ in range(n):
+  row=input()
+  I+=row
+MAP=list(map(int,I))
+
+#BFS
+level=1
+visit.append((0,level))
+
+while visit:
+  pos,level=visit.popleft()
+  if pos==n*m-1: break
+  if pos%m!=0 and MAP[pos-1]==1:
+    MAP[pos-1]=2
+    visit.append((pos-1,level+1))
+  if pos%m!=m-1 and MAP[pos+1]==1:
+    MAP[pos+1]=2
+    visit.append((pos+1,level+1))
+  if pos<n*m-m and MAP[pos+m]==1:
+    MAP[pos+m]=2
+    visit.append((pos+m,level+1))
+  if pos>m-1 and MAP[pos-m]==1: 
+    MAP[pos-m]=2
+    visit.append((pos-m,level+1))
+
+print(level)
