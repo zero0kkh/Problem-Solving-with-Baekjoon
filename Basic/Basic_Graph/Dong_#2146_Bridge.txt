@@ -1,0 +1,133 @@
+#2146 다리 만들기
+#cf. 7576 Tomato
+#BFS
+#Fast I/O
+#Learned
+import sys, math
+from collections import deque
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+sys.setrecursionlimit(111111111)
+
+n=int(input())
+MAP=[]
+for _ in range(n):
+  MAP.append(list(map(int,input().split())))
+
+#Labelling the islands=>'LMAP' list cf. #2667
+def DFS(i,j):
+  global num,n
+  if LMAP[i][j]==0 and MAP[i][j]==1:
+    LMAP[i][j]=num
+  if i!=0 and MAP[i-1][j]==1:
+    DFS(i-1,j)
+  if j!=0 and MAP[i][j-1]==1:
+    DFS(i,j-1)
+  if i!=n-1 and MAP[i+1][j]==1:
+    DFS(i+1,j)
+  if j!=n-1 and MAP[i][j+1]==1:
+    DFS(i,j+1)
+
+LMAP=[[0 for _ in range(n)] for __ in range(n)]
+num=1
+for i in range(n):
+  for j in range(n):
+    if MAP[i][j]==1 and LMAP[i][j]==0:
+      DFS(i,j)
+      num+=1
+
+#BFS
+visit=deque()
+for i in range(n):
+  for j in range(n):
+    if MAP[i][j]==1: visit.append((i,j,0,LMAP[i][j]))
+
+def show():
+  global n
+  curr=[]
+  print("CURRENT VISIT")
+  for e in visit:
+    curr.append((e[0],e[1]))
+  for i in range(n):
+    row=""
+    for j in range(n):
+      if (i,j) in curr: row+="*"
+      else: row+="0"
+      row+=" "
+    print(row)
+
+for _ in range(10):
+  #show()
+  i,j,level,label=visit.popleft()
+  if i!=0 and MAP[i-1][j]<1:
+    if MAP[i-1][j]==-1:
+      if LMAP[i-1][j][0]!=label:
+        key=level+LMAP[i-1][j][1]
+        break
+    else:
+      MAP[i-1][j]=-1
+      LMAP[i-1][j]=(label,level+1)
+      visit.append((i-1,j,level+1,label))
+  if j!=0 and MAP[i][j-1]<1:
+    if MAP[i][j-1]==-1:
+      if LMAP[i][j-1][0]!=label:
+        key=level+LMAP[i][j-1][1]
+        break
+    else:
+      MAP[i][j-1]=-1
+      LMAP[i][j-1]=(label,level+1)
+      visit.append((i,j-1,level+1,label))
+  if i!=n-1 and MAP[i+1][j]<1:
+    if MAP[i+1][j]==-1:
+      if LMAP[i+1][j][0]!=label:
+        key=level+LMAP[i+1][j][1]
+        break
+    else:
+      MAP[i+1][j]=-1
+      LMAP[i+1][j]=(label,level+1)
+      visit.append((i+1,j,level+1,label))
+  if j!=n-1 and MAP[i][j+1]<1:
+    if MAP[i][j+1]==-1:
+      if LMAP[i][j+1][0]!=label:
+        key=level+LMAP[i][j+1][1]
+        break
+    else:
+      MAP[i][j+1]=-1
+      LMAP[i][j+1]=(label,level+1)
+      visit.append((i,j+1,level+1,label))
+print(key)
+
+
+def check(i,j,label):
+  if i!=0 and LMAP[i-1][j]!=0 and LMAP[i-1][j]!=label:
+    return True
+  if j!=0 and LMAP[i][j-1]!=0 and LMAP[i][j-1]!=label:
+    return True
+  if i!=n-1 and LMAP[i+1][j]!=0 and LMAP[i+1][j]!=label:
+    return True
+  if j!=n-1 and LMAP[i][j+1]!=0 and LMAP[i][j+1]!=label:
+    return True
+  return False
+
+'''
+After solved the issue of memory
+5
+
+1 0 0 0 1
+
+0 0 0 0 0
+
+0 0 0 0 0
+
+0 0 0 0 0
+
+1 1 0 0 1
+
+이 케이스에서 2가 나와야 하는데, 3이 출력됩니다.
+
+힌트를 드리자면, 지금 코드에서는 윗줄의 두 섬이 아랫줄의 두 섬보다 먼저 큐에 들어갔기 때문에, 윗줄의 두 섬이 서로를 향해 다가가다가 상대편을 발견하는 시간이 아랫줄의 두 섬이 서로를 발견하는 시간보다 조금 더 빠릅니다.
+'''

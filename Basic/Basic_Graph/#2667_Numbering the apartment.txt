@@ -14,7 +14,7 @@ sys.setrecursionlimit(111111)
 
 def DFS(node):
   global cnt, N
-  if visit[node]==0 and map[node]==1:
+  if visit[node]==0 and MAP[node]==1:
     cnt+=1
     visit[node]=cnt
     if (node+1)%N!=0: DFS(node+1)
@@ -26,10 +26,10 @@ nums=[]
 I=""
 for _ in range(N):
   I+=input()
-map=list(map(int,I))
-visit=[0]*len(map)
-for i in range(len(map)):
-  if map[i]==1 and visit[i]==0:
+MAP=list(map(int,I))
+visit=[0]*len(MAP)
+for i in range(len(MAP)):
+  if MAP[i]==1 and visit[i]==0:
     cnt=0 #counting of node for calculate number of nodes in the connected component
     DFS(i)
     nums.append(cnt)
