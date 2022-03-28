@@ -3,6 +3,7 @@
 #BFS
 #Fast I/O
 #Learned
+#DFS는 pop 후에 중복체크해도 되지만 bfs는 넣기 전에 중복체크를 해주어야 함.
 import sys, math
 from collections import deque
 def print(string=""):
