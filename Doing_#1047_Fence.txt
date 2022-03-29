@@ -2,7 +2,7 @@
 #cf
 #Fast I/O
 #Learned
-import sys, math
+import sys, math, random
 from collections import deque
 def print(string=""):
   sys.stdout.write(string+"\n")
@@ -12,24 +12,35 @@ def input():
   return sys.stdin.readline().rstrip()
 sys.setrecursionlimit(111111111)
 
-n=int(input())
+#n=int(input())
+n=10
+print(n)
+
 X=dict()
 Y=dict()
 V=dict()
+
+#R=[i for i in range(1,101)]
+#random.shuffle(R)
 for i in range(1,n+1):
   x,y,v=map(int,input().split())
   X[i]=x
   Y[i]=y
   V[i]=v
+  #X[i]=R[i*3]
+  #Y[i]=R[i*3+1]
+  #V[i]=R[i*3+2]
+#for i in range(1,n+1):
+#  print(str(X[i])+" "+str(Y[i])+" "+str(V[i]))
 
-wood=0
-cnt=0
-benefit=[0]*n
+wood=0 #현재 만들 수 있는 울타리의 길이
+cnt=0 #자른 나무의 개수
+benefit=[0]*n #benefit[i]: i+1번째의 나무를 자를 때 얻을 수 있는 이득(필요한 둘레의 감소양(need의 감소량)+만들 수 있는 울타리 길이의 증가량(wood의 증가량))
 while True:
   Xs=sorted(list(X.values()))
   Ys=sorted(list(Y.values()))
   Vs=sorted(list(V.values()))
-  need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0])
+  need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0]) #필요한 울타리 둘레
   if need<=wood: break
   for i in list(X.keys()):
     c=V.get(i)
@@ -42,8 +53,24 @@ while True:
     if Y[i]==Ys[0]:
       c+=2*(Ys[1]-Ys[0])
     benefit[i-1]=c
-  #print(benefit)
+  print(benefit)
   ind=benefit.index(max(benefit))+1
+  if benefit.count(max(benefit))>1:
+    ind-=1
+    cands=[ind]
+    if benefit[ind]==V[ind+1]: pass
+    else:
+      while True:
+        try:
+          ind=benefit.index(max(benefit),ind+1)
+          cands.append(ind)
+        except: break
+      M=0
+      for cand in cands:
+        if V[cand+1]>M:
+          M=V[cand+1]
+          ind=cand+1
+      print(cands)
   wood+=V.get(ind)
   cnt+=1
   benefit[ind-1]=0
@@ -51,4 +78,31 @@ while True:
   del Y[ind]
   del V[ind]
 print(cnt)
-      
+
+
+'''
+같은 benefit을 가지는 것들이 존재할 때 그냥 앞에 있는 것을 가져올 때:
+1 1 3 : 7
+10 10 2 : 6
+2 9 4 : 8
+3 4 4 : 6
+4 2 4 : 8
+need: 2*(4+5)=18
+wood: 17
+--------------------
+하지만 아래처럼 해야 최소가 됨.
+1 1 3 : 7
+4 2 4 : 6
+5 3 4 : 6
+3 4 4 : 6
+2 9 4 : 6+6
+need: 2*(4+5)=18
+wood: 19
+
+2번재에 4 2 4를 골라야하는 이유:
+
+1. min/max로 인한 benefit은 추후 뒤의 선택들에 따라서 커질 잠재력이 있으므로 먼저 일단 V가 큰 것을 우선적으로.
+
+2. V가 같은 상황에서 x,y중 어느쪽의 둘레를 줄이는 가에 따라 다른 값이 존재한다면, 
+
+'''
