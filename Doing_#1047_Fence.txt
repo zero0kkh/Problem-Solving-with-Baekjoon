@@ -4,6 +4,7 @@
 #Learned
 import sys, math, random
 from collections import deque
+from itertools import combinations
 def print(string=""):
   sys.stdout.write(string+"\n")
 def print(inte=0):
@@ -12,9 +13,8 @@ def input():
   return sys.stdin.readline().rstrip()
 sys.setrecursionlimit(111111111)
 
-#n=int(input())
-n=10
-print(n)
+n=int(input())
+#print(n)
 
 X=dict()
 Y=dict()
@@ -36,10 +36,31 @@ for i in range(1,n+1):
 wood=0 #현재 만들 수 있는 울타리의 길이
 cnt=0 #자른 나무의 개수
 benefit=[0]*n #benefit[i]: i+1번째의 나무를 자를 때 얻을 수 있는 이득(필요한 둘레의 감소양(need의 감소량)+만들 수 있는 울타리 길이의 증가량(wood의 증가량))
+
+def Brute(X,Y,V,wood):
+  keys=list(X.keys())
+  cnt=2
+  while True:
+    COMB=list(combinations(keys,cnt))
+    for trees in COMB:
+      Xs=[]
+      Ys=[]
+      newwood=wood
+      for i in range(cnt):
+        newwood+=V.get(trees[i])
+      for i in keys:
+        if not (i in trees):
+          Xs.append(X.get(i))
+          Ys.append(Y.get(i))
+      Xs.sort()
+      Ys.sort()
+      need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0])
+      if need<=newwood: return cnt
+    cnt+=1
+    
 while True:
   Xs=sorted(list(X.values()))
   Ys=sorted(list(Y.values()))
-  Vs=sorted(list(V.values()))
   need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0]) #필요한 울타리 둘레
   if need<=wood: break
   for i in list(X.keys()):
@@ -53,8 +74,9 @@ while True:
     if Y[i]==Ys[0]:
       c+=2*(Ys[1]-Ys[0])
     benefit[i-1]=c
-  print(benefit)
+  #print(benefit)
   ind=benefit.index(max(benefit))+1
+  ind2=0
   if benefit.count(max(benefit))>1:
     ind-=1
     cands=[ind]
@@ -70,13 +92,20 @@ while True:
         if V[cand+1]>M:
           M=V[cand+1]
           ind=cand+1
-      print(cands)
-  wood+=V.get(ind)
-  cnt+=1
-  benefit[ind-1]=0
-  del X[ind]
-  del Y[ind]
-  del V[ind]
+          ind2=0
+        elif V[cand+1]==M:
+          ind2=cand+1
+  if ind2 and need>wood+benefit[ind-1]:
+    cnt+=Brute(X,Y,V,wood)
+    break
+  else:
+    wood+=V.get(ind)
+    cnt+=1
+    benefit[ind-1]=0
+    del X[ind]
+    del Y[ind]
+    del V[ind]
+
 print(cnt)
 
 
@@ -103,6 +132,33 @@ wood: 19
 
 1. min/max로 인한 benefit은 추후 뒤의 선택들에 따라서 커질 잠재력이 있으므로 먼저 일단 V가 큰 것을 우선적으로.
 
-2. V가 같은 상황에서 x,y중 어느쪽의 둘레를 줄이는 가에 따라 다른 값이 존재한다면, 
+=>
+TC#2
+10
+3 4 4
+10 7 2
+6 6 2
+2 9 4
+8 8 4
+7 10 5
+5 3 4
+4 2 4
+9 5 2
+1 1 3
+      need wood
+[6] 7 10 5=> 34 5
+[10] 1 1 3=>30 8
+[4] 2 9 4=>26 12
+(3,4,4)(8,8,4)(4,2,4)모두 benefit 6
+이때 
+[1] 3 4 4=>24 16
+[8] 4 2 4=>20 20
+으로 성공.
+=>[5] 8 8 4 제외를 어떻게 시킬 것인가?
+=>benefit이 같을 땐 그냥 모든 경우를 다해봐야됨.
+=>같은 최고 benefit이 나올 때까진 이전 방법 고수=>그 다음 nCk하는 함수 불러옴.
+
+Wow.... brute로만 하면 memory 초과. greedy로 하다가 brute 하면 틀렸음 나옴,,,
+일단 greedy 방법이 잘못되었나봄...
 
 '''
