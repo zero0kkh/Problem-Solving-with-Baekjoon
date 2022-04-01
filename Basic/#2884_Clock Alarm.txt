@@ -1,0 +1,3 @@
+n,m=map(int,input().split())
+if n: print(str(n)+" "+str(m-45) if m>=45 else str(n-1)+" "+str(m+15))
+else: print("0"+" "+str(m-45) if m>=45 else "23"+" "+str(m+15))
