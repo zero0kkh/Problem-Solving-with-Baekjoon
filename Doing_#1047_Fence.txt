@@ -2,8 +2,7 @@
 #cf
 #Fast I/O
 #Learned
-import sys, math, random
-from collections import deque
+import sys, math
 from itertools import combinations
 def print(string=""):
   sys.stdout.write(string+"\n")
@@ -14,100 +13,83 @@ def input():
 sys.setrecursionlimit(111111111)
 
 n=int(input())
-#print(n)
 
-X=dict()
-Y=dict()
-V=dict()
-
-#R=[i for i in range(1,101)]
-#random.shuffle(R)
+D=[[],[],[]]
 for i in range(1,n+1):
   x,y,v=map(int,input().split())
-  X[i]=x
-  Y[i]=y
-  V[i]=v
-  #X[i]=R[i*3]
-  #Y[i]=R[i*3+1]
-  #V[i]=R[i*3+2]
-#for i in range(1,n+1):
-#  print(str(X[i])+" "+str(Y[i])+" "+str(V[i]))
+  D[0].append(x)
+  D[1].append(y)
+  D[2].append(v)
 
-wood=0 #현재 만들 수 있는 울타리의 길이
-cnt=0 #자른 나무의 개수
-benefit=[0]*n #benefit[i]: i+1번째의 나무를 자를 때 얻을 수 있는 이득(필요한 둘레의 감소양(need의 감소량)+만들 수 있는 울타리 길이의 증가량(wood의 증가량))
-
-def Brute(X,Y,V,wood):
-  keys=list(X.keys())
-  cnt=2
+def Brute(wood):
+  global n
+  keys=[]
+  for i in range(n):
+    if D[0][i]!=-1:
+      keys.append(i)
+  cnt=1
   while True:
     COMB=list(combinations(keys,cnt))
-    for trees in COMB:
+    for trees in COMB: #이번 iteration에서 잘릴 나무의 index들
       Xs=[]
       Ys=[]
       newwood=wood
       for i in range(cnt):
-        newwood+=V.get(trees[i])
+        newwood+=D[2][trees[i]]
       for i in keys:
         if not (i in trees):
-          Xs.append(X.get(i))
-          Ys.append(Y.get(i))
+          Xs.append(D[0][i])
+          Ys.append(D[1][i])
       Xs.sort()
       Ys.sort()
-      need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0])
-      if need<=newwood: return cnt
+      need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0]) #안 잘린 나무들을 둘러싸는 둘레
+      if need<=newwood:
+        return cnt
     cnt+=1
-    
+
+wood=0 #현재 만들 수 있는 울타리의 길이
+cnt=0 #자른 나무의 개수
+benefit=[0]*n #benefit[i]: i+1번째의 나무를 자를 때 얻을 수 있는 이득(필요한 둘레의 감소양(need의 감소량)+만들 수 있는 울타리 길이의 증가량(wood의 증가량))
+#Greedy with benefit
 while True:
-  Xs=sorted(list(X.values()))
-  Ys=sorted(list(Y.values()))
+  keys=[]
+  Xs=[]
+  Ys=[]
+  for i in range(n):
+    if D[0][i]!=-1:
+      keys.append(i)
+  for i in keys:
+    Xs.append(D[0][i])
+    Ys.append(D[1][i])
+  Xs.sort()
+  Ys.sort()
   need=2*(Xs[-1]-Xs[0]+Ys[-1]-Ys[0]) #필요한 울타리 둘레
   if need<=wood: break
-  for i in list(X.keys()):
-    c=V.get(i)
-    if X[i]==Xs[0]:
+  
+  for i in keys:
+    c=D[2][i]
+    if D[0][i]==Xs[0]:
       c+=2*(Xs[1]-Xs[0])
-    if X[i]==Xs[-1]:
+    if D[0][i]==Xs[-1]:
       c+=2*(Xs[-1]-Xs[-2])
-    if Y[i]==Ys[-1]:
+    if D[1][i]==Ys[-1]:
       c+=2*(Ys[-1]-Ys[-2])
-    if Y[i]==Ys[0]:
+    if D[1][i]==Ys[0]:
       c+=2*(Ys[1]-Ys[0])
-    benefit[i-1]=c
+    benefit[i]=c
   #print(benefit)
-  ind=benefit.index(max(benefit))+1
-  ind2=0
+  ind=benefit.index(max(benefit))
   if benefit.count(max(benefit))>1:
-    ind-=1
-    cands=[ind]
-    if benefit[ind]==V[ind+1]: pass
-    else:
-      while True:
-        try:
-          ind=benefit.index(max(benefit),ind+1)
-          cands.append(ind)
-        except: break
-      M=0
-      for cand in cands:
-        if V[cand+1]>M:
-          M=V[cand+1]
-          ind=cand+1
-          ind2=0
-        elif V[cand+1]==M:
-          ind2=cand+1
-  if ind2 and need>wood+benefit[ind-1]:
-    cnt+=Brute(X,Y,V,wood)
+    cnt+=Brute(wood)
     break
   else:
-    wood+=V.get(ind)
+    wood+=D[2][ind]
     cnt+=1
-    benefit[ind-1]=0
-    del X[ind]
-    del Y[ind]
-    del V[ind]
-
+    benefit[ind]=0
+    D[0][ind]=-1
+    #D[1][ind]=-1
+    #D[2][ind]=-1
 print(cnt)
-
 
 '''
 같은 benefit을 가지는 것들이 존재할 때 그냥 앞에 있는 것을 가져올 때:
@@ -161,6 +143,10 @@ TC#2
 Wow.... brute로만 하면 memory 초과. greedy로 하다가 brute 하면 틀렸음 나옴,,,
 일단 greedy 방법이 잘못되었나봄...
 
-1) Brute를 하되 일단 [[],[],[]] 이중배열 하나로 해서 메모리 초과를 해결해보기
+1) Brute를 하되 일단 [[],[],[]] 이중배열 하나로 해서 메모리 초과를 해결해보기=>Fail
+
+2) 그냥 benefit이 같은 경우가 나타나면 브루트포스로 바꾸는 코드도 틀렸음,,, 그리디 benefit을 잘못 잡았거나 특정 상황을 놓치고 있는 듯
+
+c++로 메모리 문제 도전..?
 
 '''
