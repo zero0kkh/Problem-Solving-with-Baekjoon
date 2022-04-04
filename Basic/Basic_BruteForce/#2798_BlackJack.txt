@@ -1,0 +1,12 @@
+#2798 BlackJack
+#BruteForce
+from itertools import combinations
+n,m=map(int,input().split())
+nums=list(map(int,input().split()))
+COMB=list(combinations(nums,3))
+answ=0
+for comb in COMB:
+  S=sum(comb)
+  if S<=m and S>answ:
+    answ=S
+print(answ)
