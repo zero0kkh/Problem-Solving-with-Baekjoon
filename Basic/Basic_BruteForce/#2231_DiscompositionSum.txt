@@ -1,0 +1,14 @@
+n=input()
+x=int(n)-9*len(n)
+n=int(n)
+if x<0: x=0
+while x<n:
+    a=str(x)
+    sum=x
+    for i in range(len(a)):
+        sum+=int(a[i])
+    if sum==n:
+        print(x)
+        break
+    x+=1
+if x==n: print(0)
