@@ -1,0 +1,17 @@
+#7568 Size
+#Learned
+#print[*array]->e1 e2 e3 ---
+n=int(input())
+D=[]
+for i in range(n):
+    a,b=map(int,input().split())
+    D.append([a,b,i])
+D.sort(reverse=True)
+A=[0]*n
+for i in range(n):
+  rank=1
+  for j in range(0,i):
+    if D[j][0]>D[i][0] and D[j][1]>D[i][1]:
+      rank+=1
+  A[D[i][2]]=rank
+print(*A)
