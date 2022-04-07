@@ -1,0 +1,20 @@
+n,m=map(int,input().split())
+D=[]
+for _ in range(n):
+    D.append(input())
+min=n*m
+W="WBWBWBWB"
+B="BWBWBWBW"
+def chess(i,j):
+    global n, min
+    cnt=0
+    for k in range(8):
+        for l in range(8):
+            if k%2==0 and D[i+k][j+l]!=W[l]: cnt+=1
+            if k%2==1 and D[i+k][j+l]!=B[l]: cnt+=1
+    if cnt>32: cnt=64-cnt
+    return cnt if min>cnt else min
+for i in range(n-7):
+  for j in range(m-7):
+    min=chess(i,j)
+print(min)
