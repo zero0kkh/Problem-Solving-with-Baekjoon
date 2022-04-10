@@ -1,0 +1,13 @@
+n=int(input())
+T=[]
+for _ in range(n):
+  a,b=map(int,input().split())
+  T.append([b,a]) #to use original sorting reverse the order
+cnt=0
+s=0
+T.sort()
+for i in range(n):
+  if T[i][1]>=s:
+    s=T[i][0]
+    cnt+=1
+print(cnt)
