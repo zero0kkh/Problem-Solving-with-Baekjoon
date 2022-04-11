@@ -1,0 +1,7 @@
+n=int(input())
+T=list(map(int,input().split()))
+sum=0
+T.sort()
+for i in range(n):
+  sum+=T[i]*(n-i)
+print(sum)
