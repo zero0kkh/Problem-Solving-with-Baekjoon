@@ -1,0 +1,18 @@
+eqn=input()
+answ=0
+minus=0
+start=0
+ind=eqn.find('-',0)
+while ind>-1:
+  nums=eqn[start:ind].split('+')
+  for num in nums:
+    if minus==0: answ+=int(num)
+    else: answ-=int(num)
+  start=ind+1
+  ind=eqn.find('-',ind+1)
+  if minus==0: minus=1
+nums=eqn[start:].split('+')
+for num in nums:
+  if start==0: answ+=int(num)
+  else: answ-=int(num)
+print(answ)
