@@ -1,0 +1,20 @@
+#모든 문자에 대해서 코딩함. 알파벳 대문자로 한정지어서 미리 배열 만들어놓으면 단축가능
+n=int(input())
+cnts=[0]*10
+chars=[]
+for _ in range(n):
+  word=input()
+  for i in range(len(word)):
+    if not word[i] in chars:
+      cnts[len(chars)]=10**(len(word)-i-1)
+      chars.append(word[i])
+    else:
+      cnts[chars.index(word[i])]+=10**(len(word)-i-1)
+cnts=cnts[:len(chars)]
+cnts.sort(reverse=True)
+sum=0
+N=9
+for num in cnts:
+  sum+=N*num
+  N-=1
+print(sum)
