@@ -1,0 +1,10 @@
+sent=input()
+target=input()
+i=0
+sum=0
+while i<len(sent):
+  if target==sent[i:i+len(target)]:
+    sum+=1
+    i+=len(target)
+  else: i+=1
+print(sum)
