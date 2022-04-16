@@ -1,0 +1,16 @@
+n=int(input())
+C=[]
+for _ in range(n):
+  C.append(list(input()))
+Ts=[0]*2*n #행 0~n-1, 열 n~2n-1
+for i in range(n):
+  Ts[i]=C[i].count("T")
+  for j in range(n):
+    if C[i][j]=="T":
+      Ts[n+j]+=1
+min=sum(Ts)
+while True:
+  target=Ts.index(max(Ts))
+  if target<n:
+    C[target]=
+    
