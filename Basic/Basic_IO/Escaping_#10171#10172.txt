@@ -1,0 +1,5 @@
+#print (escaping character)
+#10172 Dog
+print('|\\_/|\n|q p|   /}\n( 0 )"""\\\n|"^"`    |\n||_/=\\\\__|')
+#10171 Cat
+#print("\\    /\\\n )  ( ')\n(  /  )\n \\(__)|")
