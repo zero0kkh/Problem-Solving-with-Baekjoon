@@ -8,9 +8,31 @@ for i in range(n):
   for j in range(n):
     if C[i][j]=="T":
       Ts[n+j]+=1
-min=sum(Ts)
+min=sum(Ts[:n])
 while True:
-  target=Ts.index(max(Ts))
+  print(C)
+  print(Ts)
+  M=max(Ts)
+  if M<=n//2: break
+  target=Ts.index(M)
+  min-=2*Ts[target]-n
+  Ts[target]=n-Ts[target]
   if target<n:
-    C[target]=
-    
+    for i in range(n):
+      if C[target][i]=="T":
+        Ts[n+i]-=1
+        C[target][i]="H"
+      else:
+        Ts[n+i]+=1
+        C[target][i]="T"
+  else:
+    for i in range(n):
+      if C[i][target]=="T":
+        Ts[i]-=1
+        C[i][target]="H"
+      else:
+        Ts[i]+=1
+        C[i][target]="T"
+print(min)
+
+#단순히 T가 제일 많은 줄 뒤집는 걸로는 안됨.. 처음 입력을 분석하는 알고리즘
