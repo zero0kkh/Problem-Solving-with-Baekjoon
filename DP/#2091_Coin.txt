@@ -1,0 +1,46 @@
+#2091
+##22/04/23 1,2,5의 경우 앞선 a와 다르게 2와 5가 서로소이기 때문에 1로 다 못채운다해서 불가능한 것이 아님. ex 11=2*3+5
+##22/04/24 처음의 a도 1,5,10,25에서 x%5를 빼주는 건 맞지만 1*5로 만들 수 있다 해서 무조건 바꾸는 것이 옳지 않음 ex) 50 5 0 0 2 =>처음부터 DP
+x,a,b,c,d=map(int,input().split())
+answs=[0,0,0,0]
+while True:
+  if x>a+5*b+10*c+25*d: break
+  if a<x%5: break
+  answs[0]=x%5
+  a-=answs[0]
+  x-=answs[0]
+  if x==0: break
+  DP=[[0,0,0,0,0] for _ in range(x+1)] #(# of coins,a,b,c,d) to make the x
+  for i in range(1,min(a,x)+1):
+    DP[i][0]=i
+    DP[i][1]=i
+  for i in range(x+1):
+    #print(DP)
+    if DP[i][0]==0 and i!=0: continue
+    if DP[i][2]<b and i+5<=x and DP[i+5][0]<DP[i][0]+1:
+      DP[i+5][0]=DP[i][0]+1
+      DP[i+5][1]=DP[i][1]
+      DP[i+5][2]=DP[i][2]+1
+      DP[i+5][3]=DP[i][3]
+      DP[i+5][4]=DP[i][4]
+    if DP[i][3]<c and i+10<=x and DP[i+10][0]<DP[i][0]+1:
+      DP[i+10][0]=DP[i][0]+1
+      DP[i+10][1]=DP[i][1]
+      DP[i+10][2]=DP[i][2]
+      DP[i+10][3]=DP[i][3]+1
+      DP[i+10][4]=DP[i][4] 
+    if DP[i][4]<d and i+25<=x and DP[i+25][0]<DP[i][0]+1:
+      DP[i+25][0]=DP[i][0]+1
+      DP[i+25][1]=DP[i][1]
+      DP[i+25][2]=DP[i][2]
+      DP[i+25][3]=DP[i][3]
+      DP[i+25][4]=DP[i][4]+1
+  if DP[x][0]==0:
+    answs[0]=0
+    break
+  answs[0]+=DP[x][1]
+  answs[1]=DP[x][2]
+  answs[2]=DP[x][3]
+  answs[3]=DP[x][4]
+  break
+print(" ".join(map(str,answs)))
