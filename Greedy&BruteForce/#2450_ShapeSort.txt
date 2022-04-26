@@ -1,0 +1,61 @@
+#2450 모양 정돈
+#LEARNED
+#*DONOT USE 'min' for the name of variable!! use m or M!
+'''
+IDEA: 
+모든 결과에 대해서 swap 횟수 구해서 비교 
+11~~ 2~~~ 3~~
+11~~ 3~~ 2~~
+2 1 3
+등 6개 결과와 비교시
+맞바꾸기 되는 애들 먼저 셈->2개 (min으로 구함) 1회
+맞바꾸기 안되는 애들(rotation) 3개->2회
+'''
+from itertools import permutations
+n=int(input())
+l=list(map(int,input().split()))
+l1=[1]*l.count(1)
+l2=[2]*l.count(2)
+l3=[3]*l.count(3)
+subs=[]
+subs.append(l1)
+subs.append(l2)
+subs.append(l3)
+subLists=list(permutations(subs,len(subs)))
+MIN=n
+for i in range(len(subLists)):
+  sublist=subLists[i]
+  target=[]
+  for sub in sublist:
+    target.extend(sub)
+  misMatched=[]
+  for j in range(n):
+    if l[j]!=target[j]:
+      misMatched.append([l[j],target[j]])
+  #print(misMatched)
+  rotation=0
+  cnt=0
+  n1=misMatched.count([1,2])
+  n2=misMatched.count([2,1])
+  #print(n1)
+  #print(n2)
+  m=min(n1,n2)
+  cnt+=m
+  rotation+=n1+n2-2*m
+  n3=misMatched.count([1,3])
+  n4=misMatched.count([3,1])
+  #print(n3)
+  #print(n4)
+  m=min(n3,n4)
+  cnt+=m
+  rotation+=n3+n4-2*m
+  n5=misMatched.count([2,3])
+  n6=misMatched.count([3,2])
+  #print(n5)
+  #print(n6)
+  m=min(n5,n6)
+  cnt+=m
+  rotation+=n5+n6-2*m
+  cnt+=2*(rotation//3)
+  if MIN>cnt: MIN=cnt
+print(MIN)
