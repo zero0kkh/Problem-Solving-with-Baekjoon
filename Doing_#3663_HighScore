@@ -1,0 +1,23 @@
+#3663 HighScore
+'''
+GOOD TCs
+ABABAAAAAAABA 10
+AABBAA 5
+BBBAAAAAAAAAAAAAAAAAAB: 8
+JAN: 23
+ABABAAAAAABABA: 14
+'''
+n=int(input())
+for _ in range(n):
+  name=input()
+  L=len(name)
+  sum=0
+  leftend=0
+  rightend=0
+  for i in range(L):
+    c=name[i]
+    sum+=min(1+ord('Z')-ord(c),ord(c)-ord('A'))
+    if name[i]!='A' and i-leftend<=L-rightend-i: leftend=i
+    if name[-i]!='A' and L-i-leftend>i-rightend: rightend=i
+  sum+=min(2*leftend+rightend,2*rightend+leftend,L-1)
+  print(sum)
