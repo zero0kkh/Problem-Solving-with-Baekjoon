@@ -1,0 +1,11 @@
+n=input()
+if len(n)==1: 
+  n=str(0)+n
+old=n
+cnt=1
+while True:
+  new=old[1]+str((int(old[0])+int(old[1]))%10)
+  if new==n: break
+  old=new
+  cnt+=1
+print(cnt)
