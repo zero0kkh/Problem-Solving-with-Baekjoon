@@ -1,0 +1,35 @@
+#3663 고득점
+'''
+GOOD TCs
+ABABAAAAAAABA 10
+AABBAA 5
+BBBAAAAAAAAAAAAAAAAAAB: 8
+JAN: 23
+ABABAAAAAABABA: 14
+AAZAAZA: 7
+BBZBBZB: 13
+BBAABBBBBB 16
+'''
+n=int(input())
+for _ in range(n):
+  name=input()
+  L=len(name)
+  pos=[]
+  m=L
+  sum=0
+  for i in range(L):
+    c=name[i]
+    sum+=min(1+ord('Z')-ord(c),ord(c)-ord('A'))
+    if name[i]!='A': pos.append(i)
+  if len(pos)>0:
+    if pos[0]==0: pos.remove(0)
+    if len(pos)>0:
+      if m>pos[-1]: m=pos[-1]
+      if m>L-pos[0]: m=L-pos[0]
+      p=L-pos.pop()
+      while pos:        
+        if m>2*p+pos[-1]: m=2*p+pos[-1]
+        if m>2*pos[-1]+p: m=2*pos[-1]+p
+        p=L-pos.pop()
+      sum+=m
+  print(sum)
