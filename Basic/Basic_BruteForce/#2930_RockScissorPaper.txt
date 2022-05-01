@@ -1,0 +1,56 @@
+#2930 가위바위보
+def RSP(a,b):
+  if a=="R":
+    if b=="R": return 1
+    elif b=="S": return 2
+    elif b=="P": return 0
+  elif a=="S":
+    if b=="R": return 0
+    elif b=="S": return 1
+    elif b=="P": return 2
+  elif a=="P":
+    if b=="R": return 2
+    elif b=="S": return 0
+    elif b=="P": return 1
+  else:
+    return print("WRONG INPUT")
+def compute(D):
+  L=list(D.items())
+  if len(L)==1: return 2*L[0][1]
+  elif len(L)==2:
+    a,Na=L[0]
+    b,Nb=L[1]
+    if RSP(a,b)==2:
+      return max(Na+2*Nb,2*Na)
+    if RSP(a,b)==0:
+      return max(Nb+2*Na,2*Nb)
+  elif len(L)==3:
+    r=D["R"]
+    s=D["S"]
+    p=D["P"]
+    return max(r+2*s,s+2*p,p+2*r)
+  else:
+    return print("WRONG INPUT")
+      
+r=int(input())
+S=input()
+n=int(input())
+Fs=[]
+for _ in range(n):
+  Fs.append(input())
+#Real Score
+score=0
+for i in range(r):
+  for F in Fs:
+    score+=RSP(S[i],F[i])
+print(score)
+#Ideal Maximum Score
+score=0
+for i in range(r):
+  D=dict()
+  for F in Fs:
+    if F[i] in D.keys():
+      D[F[i]]+=1
+    else: D[F[i]]=1
+  score+=compute(D)
+print(score)
