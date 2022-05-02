@@ -1,0 +1,31 @@
+#5911 선물
+n,B=map(int,input().split())
+gift=[]
+for _ in range(n):
+  p,s=map(int,input().split())
+  gift.append([p+s,s,p]) #p+s에 대해서는 reverse를 쓰되 p+s가 같을 경우 p가 큰 것이 뒤로 가게 하고 싶어서 순서를 바꾸었음
+'''
+INPUT:
+2 1
+0 2
+2 0
+ANSWER: 1
+'''
+gift.sort(reverse=True)
+M=0
+cnt=0
+while True:
+  g=gift.pop()
+  if g[2]>M: M=g[2]
+  if B<g[0]:
+    gift.append(g)
+    break
+  B-=g[0]
+  cnt+=1
+B+=M//2
+while True and gift:
+  g=gift.pop()
+  if B<g[0]: break
+  B-=g[0]
+  cnt+=1
+print(cnt)
