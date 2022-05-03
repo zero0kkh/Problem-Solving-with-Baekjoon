@@ -1,0 +1,35 @@
+#18233 러버덕을 사랑하는 모임
+#다른 풀이들=>비트 마스킹이나 그리디로 푼 풀이 찾아보기
+import itertools
+n,p,e=map(int,input().split())
+cnd=[]
+for _ in range(n):
+  cnd.append(list(map(int,input().split())))
+P=list(itertools.combinations([i for i in range(n)],p))
+
+key=[0]*n
+for p in P:
+  m=0
+  M=0
+  for i in p:
+    m+=cnd[i][0]
+    M+=cnd[i][1]
+  if m<=e and e<=M:
+    for i in p:
+      key[i]+=cnd[i][0]
+      cnd[i][1]-=cnd[i][0]
+      cnd[i][0]=0
+    e-=m
+    while e>0:
+      for i in p:
+        if cnd[i][1]>0:
+          cnd[i][1]-=1
+          e-=1
+          key[i]+=1
+          break
+S=set(key)
+if 0 in S: S.remove(0)
+if S:
+  print(" ".join(map(str,key)))
+else: print(-1)
+      
