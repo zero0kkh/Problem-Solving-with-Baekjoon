@@ -10,6 +10,8 @@ def countChange(s):
       tmp=s[i]
       cnt+=1
   return cnt
+
+
 for _ in range(n):
   s=input()
   if s[0]=="0":
@@ -19,6 +21,7 @@ for _ in range(n):
     if s[-1]=="0": S[2]+=1
     else: S[3]+=1
   answ+=countChange(s)
-if S[0]!=0 and S[3]!=0 and S[1]==0 and S[2]==0: answ+=1
-elif 
+if S[1]+2<=S[2]: answ+=S[2]-S[1]-1
+elif S[2]+2<=S[1]: answ+=S[1]-S[2]-1
+elif S[0]!=0 and S[3]!=0 and S[1]==0 and S[2]==0: answ+=1
 print(answ)
