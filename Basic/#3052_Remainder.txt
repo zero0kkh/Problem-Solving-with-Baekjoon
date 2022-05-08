@@ -1,0 +1,5 @@
+nums=[]
+for _ in range(10):
+    n=int(input())%42
+    if not n in nums: nums.append(n)
+print(len(nums))
