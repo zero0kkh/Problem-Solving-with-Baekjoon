@@ -1,0 +1,8 @@
+c=int(input())
+for _ in range(c):
+    I=list(map(float,input().split()))
+    avg=sum(I[1:])/I[0]
+    cnt=0
+    for num in I[1:]:
+        if num>avg: cnt+=1
+    print('%0.3f' %float(cnt*100/I[0])+'%')
