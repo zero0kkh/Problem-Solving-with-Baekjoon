@@ -1,1 +1,2 @@
+#asdasdasdasdasd
 print(len(input().split()))
