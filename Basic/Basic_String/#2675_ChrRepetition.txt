@@ -1,0 +1,5 @@
+for _ in range(int(input())):
+  I=input().split()
+  for c in I[1]:
+    print(c*int(I[0]), end="")
+  print("")
