@@ -1,0 +1,16 @@
+word=input().upper()
+A=[]
+C=[]
+for c in word:
+    chk=1
+    for i in range(len(A)):
+        if A[i]==c: 
+          C[i]+=1
+          chk=0
+          break
+    if chk:
+        A.append(c)
+        C.append(1)
+M=max(C)
+if C.count(M)>1: print("?")
+else: print(A[C.index(M)])
