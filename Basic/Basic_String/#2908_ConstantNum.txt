@@ -1,0 +1,4 @@
+print(max(map(int,input()[::-1].split())))
+
+#max(str): https://skeo131.tistory.com/48
+#print(max(input()[::-1].split()))
