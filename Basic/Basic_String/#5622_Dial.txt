@@ -1,0 +1,13 @@
+#코드 작동 효율성보단 코딩 효율성을 우선적으로 생각함
+word=input()
+sum=0
+for c in word:
+  sum+=3
+  if ord('C')<ord(c): sum+=1
+  if ord('F')<ord(c): sum+=1
+  if ord('I')<ord(c): sum+=1
+  if ord('L')<ord(c): sum+=1
+  if ord('O')<ord(c): sum+=1
+  if ord('S')<ord(c): sum+=1
+  if ord('V')<ord(c): sum+=1
+print(sum)
