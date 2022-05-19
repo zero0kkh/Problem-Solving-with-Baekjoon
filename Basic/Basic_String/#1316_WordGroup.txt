@@ -1,0 +1,14 @@
+cnt=0
+for _ in range(int(input())):
+  word=input()
+  L=[]
+  tmp=1
+  for i in range(len(word)-1):
+    if word[i] in L:
+      tmp=0
+      break
+    if word[i]==word[i+1]: continue
+    else: L.append(word[i])
+  if word[-1] in L: continue
+  else: cnt+=tmp
+print(cnt)
