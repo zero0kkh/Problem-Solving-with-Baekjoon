@@ -1,0 +1,9 @@
+C=['c=','c-','dz=','d-','lj','nj','s=','z=']
+I=input()
+cnt=0
+while I:
+  if I[:2] in C: I=I[2:]
+  elif I[:3] in C: I=I[3:]
+  else: I=I[1:]
+  cnt+=1
+print(cnt)
