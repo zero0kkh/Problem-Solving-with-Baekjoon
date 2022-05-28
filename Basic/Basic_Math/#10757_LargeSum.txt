@@ -1,0 +1,2 @@
+print(sum(list(map(int,input().split()))))
+#C로 나중에 구현
