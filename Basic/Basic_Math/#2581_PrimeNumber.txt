@@ -1,0 +1,19 @@
+import math
+m=int(input())
+n=int(input())
+sum=0
+mini=n
+def Prime(num,n):
+  if num==1: return False
+  for i in range(2,round(math.sqrt(num))+1):
+    if num%i==0:
+      return False
+  return True
+for i in range(m,n+1):
+  if Prime(i,n):
+    sum+=i
+    if i<mini: mini=i
+if sum==0: print(-1)
+else:
+  print(sum)
+  print(mini)
