@@ -1,0 +1,20 @@
+import math
+prime=[]
+for i in range(2,2*123456+1):
+  chk=1
+  for p in prime:
+    if p>math.sqrt(i): break
+    if i%p==0:
+      chk=0
+      break
+  if chk: prime.append(i)
+#print(prime)
+cnt=0
+n=int(input())
+while n!=0:
+  for p in prime:
+    if p>2*n: break
+    if p>n: cnt+=1
+  print(cnt)
+  n=int(input())
+  cnt=0
