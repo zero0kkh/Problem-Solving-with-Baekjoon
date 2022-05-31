@@ -1,0 +1,19 @@
+import math
+prime=[]
+for i in range(2,10000):
+  chk=1
+  for p in prime:
+    if p>math.sqrt(i): break
+    if i%p==0:
+      chk=0
+      break
+  if chk: prime.append(i)
+for _ in range(int(input())):
+  n=int(input())
+  a=n//2
+  chk=0
+  while a>1:
+    if a in prime and n-a in prime:
+      print(str(a)+" "+str(n-a))
+      break
+    a-=1
