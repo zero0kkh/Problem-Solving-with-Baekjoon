@@ -1,3 +1,5 @@
+from sys import stdin
+input = stdin.readline
 import math
 prime=[]
 for i in range(2,10000):
@@ -8,6 +10,7 @@ for i in range(2,10000):
       chk=0
       break
   if chk: prime.append(i)
+prime=set(prime)
 for _ in range(int(input())):
   n=int(input())
   a=n//2
@@ -17,3 +20,26 @@ for _ in range(int(input())):
       print(str(a)+" "+str(n-a))
       break
     a-=1
+
+
+'''
+#조금 더 효율적인 상황에 맞는 "in"을 구현하려고 하였는데 python list에서 지원하는 in operator보다 느렸음. 같은 O(n)이지만 상수배 차이때문인듯. 다만 set(hash table로 구현되어 있음)에 대해서 in이 O(1)이라는 것을 알게 되어 위처럼 수정. +input을 바꾼 것도 차이가 큼. TC가 생각보다 많은 것으로 추정.
+
+  while a>1:
+    for i in range(len(prime)):
+      p=prime[i]
+      if p>a: break
+      elif p==a:
+        for j in range(i,len(prime)):
+          p=prime[j]
+          if p>n-a: break
+          elif p==n-a:
+            chk=1
+            break
+        break
+    if chk:
+      print(str(a)+" "+str(n-a))
+      break
+    else:
+      a-=1
+'''
