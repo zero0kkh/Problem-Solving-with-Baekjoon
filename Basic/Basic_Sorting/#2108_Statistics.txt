@@ -1,0 +1,31 @@
+import sys
+input = sys.stdin.readline
+
+
+N=int(input())
+l=dict()
+for _ in range(N):
+  n=int(input())
+  if n in l:
+    l[n]+=1
+  else:
+    l[n]=1
+l=list(l.items())
+l.sort()
+SUM=0
+cnt=0
+CkSecond=0
+for e in l:
+  SUM+=e[0]*e[1]
+  cnt+=e[1]
+  if cnt>(N-1)//2 and CkSecond==0:
+    Second=e[0]
+    CkSecond=1
+
+print(round(SUM/N))
+print(Second)
+Last=l[-1][0]-l[0][0]
+l.sort(key=lambda x:x[1],reverse=True)
+if N>1 and l[0][1]==l[1][1]: print(l[1][0])
+else: print(l[0][0])
+print(Last)
