@@ -1,0 +1,12 @@
+import sys
+input = sys.stdin.readline
+l=[]
+for _ in range(int(input())):
+  word=input().split()[0]
+  l.append([len(word),word])
+l.sort()
+prev=''
+for word in l:
+  if prev==word: continue
+  print(word[1])
+  prev=word
