@@ -1,0 +1,21 @@
+import sys
+input = sys.stdin.readline
+
+n=input()
+l=list(map(int,input().split()))
+ls=sorted(set(l))
+s=""
+D=dict()
+def Binary(x,s,e):
+  if x==ls[s]: return s
+  elif x==ls[e]: return e
+  mid=ls[(s+e)//2]
+  if x>mid: return Binary(x,(s+e)//2,e)
+  elif x<mid: return Binary(x,s,(s+e)//2)
+  elif x==mid: return (s+e)//2
+for x in l:
+  if x in D: s+=" "+D[x]
+  else:
+    D[x]=str(Binary(x,0,len(ls)-1))
+    s+=" "+D[x]
+print(s[1:])
