@@ -1,0 +1,20 @@
+import sys
+input = sys.stdin.readline
+n=int(input())
+cards=list(map(int,input().split()))
+cards.sort()
+m=input()
+cands=list(map(int,input().split()))
+def Binary(x,s,e):
+  if x==cards[s]: return 1
+  elif x==cards[e]: return 1
+  elif s+2>e: return 0
+  mid=cards[(s+e)//2]
+  if x>mid: return Binary(x,(s+e)//2,e)
+  elif x<mid: return Binary(x,s,(s+e)//2)
+  elif x==mid: return 1
+s=""
+for c in cands:
+    if Binary(c,0,n-1): s+=" 1"
+    else: s+=" 0"
+print(s[1:])
