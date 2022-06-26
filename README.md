@@ -13,4 +13,4 @@ FYI, https://web.archive.org/web/20150322235030/https://www.acmicpc.net/wiki/%EC
 
 2022
 
-May 21: on duty / July 15~July 24: Training
+May 21: on duty / July 15~July 25: Training
