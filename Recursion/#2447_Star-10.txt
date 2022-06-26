@@ -1,0 +1,21 @@
+REF: https://cotak.tistory.com/38
+import sys
+sys.setrecursionlimit(10**6)
+input = sys.stdin.readline
+n=int(input())
+def star(n):
+  L=[]
+  if n==3:
+    L.append("***")
+    L.append("* *")
+    L.append("***")
+    return L
+  X=star(n//3)
+  for x in X:
+    L.append(x*3)
+  for x in X:
+    L.append(x+" "*len(x)+x)
+  for x in X:
+    L.append(x*3)
+  return L
+print("\n".join(star(n)))
