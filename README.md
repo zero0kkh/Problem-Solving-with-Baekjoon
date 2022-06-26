@@ -9,7 +9,7 @@ In the first step(problems in "Basic" folder in here), I will follow the order o
 
 FYI, https://web.archive.org/web/20150322235030/https://www.acmicpc.net/wiki/%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98/main
 
-\<Excuse for rest\>
+\<Excuse for being rest\>
 
 2022
 
