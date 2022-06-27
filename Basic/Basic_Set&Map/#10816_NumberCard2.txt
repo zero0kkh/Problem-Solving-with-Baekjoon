@@ -1,0 +1,14 @@
+#Using Dict in Python (hash map)
+Cards=dict()
+n=input()
+cards=list(map(int,input().split()))
+for c in cards:
+  if c in Cards: Cards[c]+=1
+  else: Cards[c]=1
+m=input()
+cands=list(map(int,input().split()))
+s=""
+for c in cands:
+  if c in Cards:  s+=" "+str(Cards[c])
+  else: s+=" 0"
+print(s[1:])
