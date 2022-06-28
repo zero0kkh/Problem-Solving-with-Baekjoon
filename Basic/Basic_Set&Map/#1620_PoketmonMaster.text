@@ -1,0 +1,19 @@
+import sys
+def print(string=""):
+  sys.stdout.write(string+"\n")
+def print(inte=0):
+  sys.stdout.write(str(inte)+"\n")
+def input():
+  return sys.stdin.readline().rstrip()
+
+n,m=map(int,input().split())
+mons1=dict()
+mons2=dict()
+for i in range(1,n+1):
+  I=input()
+  mons1[I]=i
+  mons2[i]=I
+for _ in range(m):
+  I=input()
+  if I.isdigit(): print(mons2[int(I)])
+  else: print(mons1[I])
